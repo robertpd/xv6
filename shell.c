@@ -60,8 +60,10 @@ runcmd(struct cmd *cmd)
     ecmd = (struct execcmd*)cmd;
     if(ecmd->argv[0] == 0)
       exit(0);
-    fprintf(stderr, "exec not implemented\n");
-    // Your code here ...
+
+    execv(ecmd->argv[0],ecmd->argv);
+    char path[10] = "/bin/";
+    execv(strcat(path, ecmd->argv[0]),ecmd->argv);
     break;
 
   case '>':
@@ -77,14 +79,13 @@ runcmd(struct cmd *cmd)
     fprintf(stderr, "pipe not implemented\n");
     // Your code here ...
     break;
-  }    
+  }
   exit(0);
 }
 
 int
 getcmd(char *buf, int nbuf)
 {
-  
   if (isatty(fileno(stdin)))
     fprintf(stdout, "6.828$ ");
   memset(buf, 0, nbuf);
